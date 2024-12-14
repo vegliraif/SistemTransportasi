@@ -1,0 +1,23 @@
+class Tiket {
+    private String idTiket;
+    private String namaPenumpang;
+    private double harga;
+
+    public Tiket(String idTiket, String namaPenumpang, double harga) {
+        this.idTiket = idTiket;
+        this.namaPenumpang = namaPenumpang;
+        this.harga = harga;
+    }
+
+    public String getIdTiket() {
+        return idTiket;
+    }
+
+    public String getNamaPenumpang() {
+        return namaPenumpang;
+    }
+
+    public double getHarga() {
+        return harga;
+    }
+}
