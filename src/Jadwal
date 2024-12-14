@@ -1,0 +1,26 @@
+class Jadwal {
+    private String waktuBerangkat;
+    private String waktuTiba;
+    private Rute rute;
+
+    public Jadwal(String waktuBerangkat, String waktuTiba) {
+        this.waktuBerangkat = waktuBerangkat;
+        this.waktuTiba = waktuTiba;
+    }
+
+    public String getWaktuBerangkat() {
+        return waktuBerangkat;
+    }
+
+    public String getWaktuTiba() {
+        return waktuTiba;
+    }
+
+    public Rute getRute() {
+        return rute;
+    }
+
+    public void setRute(Rute rute) {
+        this.rute = rute;
+    }
+}
