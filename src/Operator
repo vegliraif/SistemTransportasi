@@ -1,0 +1,36 @@
+class Operator {
+    private String idOperator;
+    private String namaOperator;
+    private String kontakOperator;
+
+    public Operator(String idOperator, String namaOperator, String kontakOperator) {
+        this.idOperator = idOperator;
+        this.namaOperator = namaOperator;
+        this.kontakOperator = kontakOperator;
+    }
+
+    // Getters and setters
+    public String getIdOperator() {
+        return idOperator;
+    }
+
+    public void setIdOperator(String idOperator) {
+        this.idOperator = idOperator;
+    }
+
+    public String getNamaOperator() {
+        return namaOperator;
+    }
+
+    public void setNamaOperator(String namaOperator) {
+        this.namaOperator = namaOperator;
+    }
+
+    public String getKontakOperator() {
+        return kontakOperator;
+    }
+
+    public void setKontakOperator(String kontakOperator) {
+        this.kontakOperator = kontakOperator;
+    }
+}
