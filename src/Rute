@@ -1,0 +1,23 @@
+class Rute {
+    private String namaRute;
+    private List<Jadwal> jadwalList;
+
+    public Rute(String namaRute) {
+        this.namaRute = namaRute;
+        this.jadwalList = new ArrayList<>();
+    }
+
+    // Bidirectional association with Jadwal
+    public void addJadwal(Jadwal jadwal) {
+        jadwalList.add(jadwal);
+        jadwal.setRute(this);
+    }
+
+    public List<Jadwal> getJadwalList() {
+        return jadwalList;
+    }
+
+    public String getNamaRute() {
+        return namaRute;
+    }
+}
