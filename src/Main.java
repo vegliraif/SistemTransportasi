@@ -1,66 +1,137 @@
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+import java.io.*;
+import java.text.DecimalFormat;
 
 public class Main {
-    private static final String FILE_NAME = "penumpang.txt";
+    private static final String FILE_NAME = "data.txt";
+    private static List<Map<String, Object>> dataList = new ArrayList<>();
 
     public static void main(String[] args) {
-        List<Penumpang> penumpangList = new ArrayList<>();
-
-        // Coba membaca data dari file
-        try {
-            penumpangList = Penumpang.loadFromFile(FILE_NAME);
-            System.out.println("Data berhasil dimuat dari file.");
-        } catch (IOException e) {
-            System.out.println("Tidak ada data sebelumnya.");
-        }
-
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
 
+        // Memuat data dari file jika file ada
+        loadFromFile(FILE_NAME);
+
         while (running) {
             System.out.println("=== Menu ===");
-            System.out.println("1. Tambah Penumpang");
-            System.out.println("2. Tampilkan Penumpang");
-            System.out.println("3. Simpan dan Keluar");
+            System.out.println("1. Input Data");
+            System.out.println("2. Tampilkan Data");
+            System.out.println("3. Hapus Data");
+            System.out.println("4. Simpan dan Keluar");
             System.out.print("Pilih opsi: ");
             int choice = scanner.nextInt();
             scanner.nextLine(); // Membersihkan buffer
 
             switch (choice) {
                 case 1:
-                    System.out.print("Masukkan nama: ");
-                    String nama = scanner.nextLine();
-                    System.out.print("Masukkan kontak: ");
-                    String kontak = scanner.nextLine();
-                    System.out.print("Masukkan ID Tiket: ");
-                    String idTiket = scanner.nextLine();
-                    System.out.print("Masukkan jumlah penumpang: ");
-                    int jumlah = scanner.nextInt();
+                    Map<String, Object> data = new HashMap<>();
+                    System.out.print("Masukkan ID Operator: ");
+                    data.put("idOperator", scanner.nextLine());
+                    System.out.print("Masukkan Nama Operator: ");
+                    data.put("namaOperator", scanner.nextLine());
+                    System.out.print("Masukkan Kontak Operator: ");
+                    data.put("kontakOperator", scanner.nextLine());
+                    System.out.print("Masukkan ID Kendaraan: ");
+                    data.put("idKendaraan", scanner.nextLine());
+                    System.out.print("Masukkan Jenis Kendaraan: ");
+                    data.put("jenisKendaraan", scanner.nextLine());
+                    System.out.print("Masukkan Kapasitas: ");
+                    data.put("kapasitas", scanner.nextInt());
                     scanner.nextLine(); // Membersihkan buffer
-                    System.out.print("Masukkan tanggal: ");
-                    String tanggal = scanner.nextLine();
-                    System.out.print("Masukkan pendapatan harian: ");
-                    double pendapatan = scanner.nextDouble();
-                    scanner.nextLine(); // Membersihkan buffer
+                    System.out.print("Masukkan Status Operasional: ");
+                    data.put("statusOperasional", scanner.nextLine());
+                    System.out.print("Masukkan Jumlah Penumpang: ");
+                    data.put("jumlahPenumpang", scanner.nextInt());
+                    scanner.nextLine(); 
+                    System.out.print("Masukkan Nama Rute: ");
+                    data.put("namaRute", scanner.nextLine());
+                    System.out.print("Masukkan Titik Awal: ");
+                    data.put("titikAwal", scanner.nextLine());
+                    System.out.print("Masukkan Titik Akhir: ");
+                    data.put("titikAkhir", scanner.nextLine());
+                    System.out.print("Masukkan Daftar Pemberhentian: ");
+                    data.put("daftarPemberhentian", scanner.nextLine());
+                    System.out.print("Masukkan Harga: ");
+                    data.put("harga", scanner.nextDouble());
+                    scanner.nextLine(); 
+                    System.out.print("Masukkan Waktu Keberangkatan: ");
+                    data.put("waktuKeberangkatan", scanner.nextLine());
+                    System.out.print("Masukkan Waktu Tiba: ");
+                    data.put("waktuTiba", scanner.nextLine());
+                    System.out.print("Masukkan Tanggal: ");
+                    data.put("tanggal", scanner.nextLine());
+                    System.out.print("Masukkan Pendapatan Harian: ");
+                    data.put("pendapatanHarian", scanner.nextDouble());
+                    scanner.nextLine();
 
-                    penumpangList.add(new Penumpang(nama, kontak, idTiket, jumlah, tanggal, pendapatan));
-                    System.out.println("Penumpang berhasil ditambahkan!");
+                    // Menambahkan label Data ke- (otomatis)
+                    int dataNumber = dataList.size() + 1; // Data ke-1, ke-2, ...
+                    data.put("dataLabel", "Data " + dataNumber);
+
+                    dataList.add(data);
+                    System.out.println("Data berhasil ditambahkan!");
                     break;
 
                 case 2:
-                    System.out.println("=== Daftar Penumpang ===");
-                    for (Penumpang p : penumpangList) {
-                        System.out.println(p);
+                    System.out.println("=== Data ===");
+                    for (int i = 0; i < dataList.size(); i++) {
+                        Map<String, Object> d = dataList.get(i);
+                        System.out.println(d.get("dataLabel") + " ");
+                        System.out.println("ID Operator         : " + d.get("idOperator"));
+                        System.out.println("Nama Operator       : " + d.get("namaOperator"));
+                        System.out.println("Kontak Operator     : " + d.get("kontakOperator"));
+                        System.out.println("ID Kendaraan        : " + d.get("idKendaraan"));
+                        System.out.println("Jenis Kendaraan     : " + d.get("jenisKendaraan"));
+                        System.out.println("Kapasitas           : " + d.get("kapasitas"));
+                        System.out.println("Status Operasional  : " + d.get("statusOperasional"));
+                        System.out.println("Jumlah Penumpang    : " + d.get("jumlahPenumpang"));
+                        System.out.println("Nama Rute           : " + d.get("namaRute"));
+                        System.out.println("Titik Awal          : " + d.get("titikAwal"));
+                        System.out.println("Titik Akhir         : " + d.get("titikAkhir"));
+                        System.out.println("Daftar Pemberhentian: " + d.get("daftarPemberhentian"));
+
+                        // Format harga dan pendapatan harian
+                        DecimalFormat df = new DecimalFormat("#,###");
+                        double harga = (double) d.get("harga");
+                        double pendapatanHarian = (double) d.get("pendapatanHarian");
+
+                        System.out.println("Harga               : " + df.format(harga));
+                        System.out.println("Waktu Keberangkatan : " + d.get("waktuKeberangkatan"));
+                        System.out.println("Waktu Tiba          : " + d.get("waktuTiba"));
+                        System.out.println("Tanggal             : " + d.get("tanggal"));
+                        System.out.println("Pendapatan Harian   : " + df.format(pendapatanHarian));
+
+                        System.out.println("====================================");
                     }
                     break;
 
                 case 3:
-                    // Simpan data ke file
+                    System.out.print("Masukkan nomor data yang ingin dihapus : ");
+                    String dataLabelToDelete = scanner.nextLine();
+                    boolean dataDeleted = false;
+
+                    // Mencari data berdasarkan label
+                    for (int i = 0; i < dataList.size(); i++) {
+                        Map<String, Object> d = dataList.get(i);
+                        String dataLabel = (String) d.get("dataLabel");
+
+                        if (dataLabel.equals(dataLabelToDelete)) {
+                            dataList.remove(i);
+                            System.out.println("Data berhasil dihapus: " + dataLabel);
+                            dataDeleted = true;
+                            break;
+                        }
+                    }
+
+                    if (!dataDeleted) {
+                        System.out.println("Data dengan label tersebut tidak ditemukan.");
+                    }
+                    break;
+
+                case 4:
                     try {
-                        Penumpang.saveToFile(penumpangList, FILE_NAME);
+                        saveToFile(dataList, FILE_NAME);
                         System.out.println("Data berhasil disimpan.");
                     } catch (IOException e) {
                         System.out.println("Terjadi kesalahan saat menyimpan data.");
@@ -74,5 +145,26 @@ public class Main {
         }
 
         scanner.close();
+    }
+
+    // Simpan data ke file
+    public static void saveToFile(List<Map<String, Object>> dataList, String fileName) throws IOException {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
+            oos.writeObject(dataList);
+        }
+    }
+
+    // Memuat data dari file
+    public static void loadFromFile(String fileName) {
+        try {
+            File file = new File(fileName);
+            if (file.exists()) {
+                try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
+                    dataList = (List<Map<String, Object>>) ois.readObject();
+                }
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Terjadi kesalahan saat memuat data.");
+        }
     }
 }
