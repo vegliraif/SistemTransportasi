@@ -6,7 +6,7 @@ public class SistemTransportasiGUI {
 
     private JFrame frame;
     private JTextField tfIDOperator, tfNamaOperator, tfKontakOperator, tfIDKendaraan, tfKapasitas, tfNamaRute, tfTitikAwal, tfTitikAkhir, tfDaftarPemberhentian,
-            tfWaktuKeberangkatan, tfWaktuTiba, tfHarga, tfTanggal, tfIDPenumpang, tfJumlahPenumpang, tfPendapatanHarian;
+            tfWaktuKeberangkatan, tfWaktuTiba, tfHarga, tfTanggal, tfJumlahPenumpang, tfPendapatanHarian;
     private JComboBox<String> cbJenisKendaraan, cbStatusOperasional;
     private JTable tableTransportasiBus, tableTransportasiKereta, tableTransportasiTaksi, tablePenumpangBus, tablePenumpangKereta, tablePenumpangTaksi, tableLaporanBus, tableLaporanKereta, tableLaporanTaksi, tableOperator;
     private DefaultTableModel modelTransportasiBus, modelTransportasiKereta, modelTransportasiTaksi, modelPenumpangBus, modelPenumpangKereta, modelPenumpangTaksi, modelLaporanBus, modelLaporanKereta, modelLaporanTaksi, modelOperator;
@@ -21,8 +21,6 @@ public class SistemTransportasiGUI {
     private static final String FILE_LAPORAN_BUS = "data_laporan_bus.csv";
     private static final String FILE_LAPORAN_KERETA = "data_laporan_kereta.csv";
     private static final String FILE_LAPORAN_TAKSI = "data_laporan_taksi.csv";
-
-
 
     public SistemTransportasiGUI() {
         
@@ -68,7 +66,7 @@ public class SistemTransportasiGUI {
         tfWaktuTiba = new JTextField();
         tfHarga = new JTextField();
         tfTanggal = new JTextField();
-        tfIDPenumpang = new JTextField();
+        
         tfJumlahPenumpang = new JTextField();
         tfPendapatanHarian = new JTextField();
 
@@ -98,8 +96,7 @@ public class SistemTransportasiGUI {
         panelInput.add(tfTanggal);
         panelInput.add(new JLabel("Jumlah Penumpang:"));
         panelInput.add(tfJumlahPenumpang);
-        panelInput.add(new JLabel("ID Tiket Penumpang:"));
-        panelInput.add(tfIDPenumpang);
+        
         panelInput.add(new JLabel("Pendapatan Harian:"));
         panelInput.add(tfPendapatanHarian);
 
@@ -107,8 +104,10 @@ public class SistemTransportasiGUI {
         JPanel panelTombol = new JPanel();
         JButton btnSimpan = new JButton("Simpan");
         JButton btnBatal = new JButton("Batal");
+        JButton btnHapus = new JButton("Hapus");
         panelTombol.add(btnSimpan);
         panelTombol.add(btnBatal);
+        panelTombol.add(btnHapus);
 
         // Panel tabel utama
         JTabbedPane tabbedPane = new JTabbedPane();
@@ -133,15 +132,15 @@ public class SistemTransportasiGUI {
         // Panel penumpang
         JTabbedPane tabPenumpang = new JTabbedPane();
 
-        modelPenumpangBus = new DefaultTableModel(new String[]{"ID Operator", "ID Penumpang", "Jumlah", "Tanggal"}, 0);
+        modelPenumpangBus = new DefaultTableModel(new String[]{"ID Operator", "Jumlah", "Tanggal"}, 0);
         tablePenumpangBus = new JTable(modelPenumpangBus);
         tabPenumpang.addTab("Bus", new JScrollPane(tablePenumpangBus));
 
-        modelPenumpangKereta = new DefaultTableModel(new String[]{"ID Operator", "ID Penumpang", "Jumlah", "Tanggal"}, 0);
+        modelPenumpangKereta = new DefaultTableModel(new String[]{"ID Operator", "Jumlah", "Tanggal"}, 0);
         tablePenumpangKereta = new JTable(modelPenumpangKereta);
         tabPenumpang.addTab("Kereta", new JScrollPane(tablePenumpangKereta));
 
-        modelPenumpangTaksi = new DefaultTableModel(new String[]{"ID Operator", "ID Penumpang", "Jumlah", "Tanggal"}, 0);
+        modelPenumpangTaksi = new DefaultTableModel(new String[]{"ID Operator", "Jumlah", "Tanggal"}, 0);
         tablePenumpangTaksi = new JTable(modelPenumpangTaksi);
         tabPenumpang.addTab("Taksi", new JScrollPane(tablePenumpangTaksi));
 
@@ -181,6 +180,7 @@ public class SistemTransportasiGUI {
          // Event listener tombol
          btnSimpan.addActionListener(e -> simpanData());
          btnBatal.addActionListener(e -> batalInput());
+         btnHapus.addActionListener(e -> hapusData(tabbedPane));
 
         frame.setMinimumSize(new Dimension(600, 400));
         frame.addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -195,6 +195,8 @@ public class SistemTransportasiGUI {
         frame.setVisible(true);
         
     }
+
+
 
     private void simpanData() {
         if (tfIDOperator.getText().isEmpty() || tfNamaOperator.getText().isEmpty() || tfKontakOperator.getText().isEmpty()) {
@@ -228,7 +230,7 @@ public class SistemTransportasiGUI {
 
             Object[] penumpangRow = {
                 idOperator,
-                tfIDPenumpang.getText(),
+                
                 tfJumlahPenumpang.getText(),
                 tfTanggal.getText()
             };
@@ -249,7 +251,7 @@ public class SistemTransportasiGUI {
 
             Object[] penumpangRow = {
                 idOperator,
-                tfIDPenumpang.getText(),
+                
                 tfJumlahPenumpang.getText(),
                 tfTanggal.getText()
             };
@@ -270,7 +272,7 @@ public class SistemTransportasiGUI {
 
             Object[] penumpangRow = {
                 idOperator,
-                tfIDPenumpang.getText(),
+                
                 tfJumlahPenumpang.getText(),
                 tfTanggal.getText()
             };
@@ -307,9 +309,92 @@ public class SistemTransportasiGUI {
         tfWaktuTiba.setText("");
         tfHarga.setText("");
         tfTanggal.setText("");
-        tfIDPenumpang.setText("");
+        
         tfJumlahPenumpang.setText("");
         tfPendapatanHarian.setText("");
+    }
+
+    private void hapusData(JTabbedPane tabbedPane) {
+        int selectedTabIndex = tabbedPane.getSelectedIndex();
+        JTable selectedTable = null;
+        String targetFile = "";
+    
+        switch (selectedTabIndex) {
+            case 0:
+                int subTabIndexTransportasi = ((JTabbedPane) tabbedPane.getComponentAt(selectedTabIndex)).getSelectedIndex();
+                selectedTable = switch (subTabIndexTransportasi) {
+                    case 0 -> tableTransportasiBus;
+                    case 1 -> tableTransportasiKereta;
+                    case 2 -> tableTransportasiTaksi;
+                    default -> null;
+                };
+                targetFile = switch (subTabIndexTransportasi) {
+                    case 0 -> FILE_TRANSPORTASI_BUS;
+                    case 1 -> FILE_TRANSPORTASI_KERETA;
+                    case 2 -> FILE_TRANSPORTASI_TAKSI;
+                    default -> "";
+                };
+                break;
+            case 1:
+                int subTabIndexPenumpang = ((JTabbedPane) tabbedPane.getComponentAt(selectedTabIndex)).getSelectedIndex();
+                selectedTable = switch (subTabIndexPenumpang) {
+                    case 0 -> tablePenumpangBus;
+                    case 1 -> tablePenumpangKereta;
+                    case 2 -> tablePenumpangTaksi;
+                    default -> null;
+                };
+                targetFile = switch (subTabIndexPenumpang) {
+                    case 0 -> FILE_PENUMPANG_BUS;
+                    case 1 -> FILE_PENUMPANG_KERETA;
+                    case 2 -> FILE_PENUMPANG_TAKSI;
+                    default -> "";
+                };
+                break;
+            case 2:
+                int subTabIndexLaporan = ((JTabbedPane) tabbedPane.getComponentAt(selectedTabIndex)).getSelectedIndex();
+                selectedTable = switch (subTabIndexLaporan) {
+                    case 0 -> tableLaporanBus;
+                    case 1 -> tableLaporanKereta;
+                    case 2 -> tableLaporanTaksi;
+                    default -> null;
+                };
+                targetFile = switch (subTabIndexLaporan) {
+                    case 0 -> FILE_LAPORAN_BUS;
+                    case 1 -> FILE_LAPORAN_KERETA;
+                    case 2 -> FILE_LAPORAN_TAKSI;
+                    default -> "";
+                };
+                break;
+            case 3:
+                selectedTable = tableOperator;
+                targetFile = FILE_OPERATOR;
+                break;
+        }
+    
+        if (selectedTable != null) {
+            int selectedRow = selectedTable.getSelectedRow();
+            if (selectedRow >= 0) {
+                int confirmation = JOptionPane.showConfirmDialog(
+                    frame,
+                    "Apakah Anda Yakin Menghapus Data?",
+                    "Konfirmasi Hapus",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE
+                );
+    
+                if (confirmation == JOptionPane.YES_OPTION) {
+                    DefaultTableModel selectedModel = (DefaultTableModel) selectedTable.getModel();
+                    selectedModel.removeRow(selectedRow);
+    
+                    // Simpan data kembali ke file
+                    saveModelToFile(selectedModel, targetFile);
+    
+                    JOptionPane.showMessageDialog(frame, "Data berhasil dihapus.", "Informasi", JOptionPane.INFORMATION_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(frame, "Pilih baris yang akan dihapus.", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            }
+        }
     }
 
     private void saveDataToFile(String fileName, Object[] data) {
@@ -323,11 +408,24 @@ public class SistemTransportasiGUI {
         }
     }
 
+    private void saveModelToFile(DefaultTableModel model, String fileName) {
+        try (FileWriter writer = new FileWriter(fileName)) {
+            for (int i = 0; i < model.getRowCount(); i++) {
+                for (int j = 0; j < model.getColumnCount(); j++) {
+                    writer.write(model.getValueAt(i, j).toString());
+                    if (j < model.getColumnCount() - 1) {
+                        writer.write(",");
+                    }
+                }
+                writer.write("\n");
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(frame, "Gagal Menyimpan Data ke File", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+
     private void loadData() {
-        loadDataFromFile(FILE_OPERATOR, modelOperator);
-        loadDataFromFile(FILE_TRANSPORTASI_BUS, modelTransportasiBus);
-        loadDataFromFile(FILE_TRANSPORTASI_KERETA, modelTransportasiKereta);
-        loadDataFromFile(FILE_TRANSPORTASI_TAKSI, modelTransportasiTaksi);
         loadDataFromFile(FILE_OPERATOR, modelOperator);
         loadDataFromFile(FILE_TRANSPORTASI_BUS, modelTransportasiBus);
         loadDataFromFile(FILE_TRANSPORTASI_KERETA, modelTransportasiKereta);
@@ -339,6 +437,7 @@ public class SistemTransportasiGUI {
         loadDataFromFile(FILE_LAPORAN_KERETA, modelLaporanKereta);
         loadDataFromFile(FILE_LAPORAN_TAKSI, modelLaporanTaksi);
     }
+    
 
     private void loadDataFromFile(String fileName, DefaultTableModel model) {
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
@@ -358,3 +457,4 @@ public class SistemTransportasiGUI {
         new SistemTransportasiGUI();
     }
 }
+
